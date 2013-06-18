@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">英雄联盟考试</string>
+    <string name="action_about">关于</string>
+    <string name="start">开始</string>
+    <string name="online_test">在线考试</string>
+    <string name="rank">排行榜</string>
+    <string name="review">复习</string>
+    <string name="question">第%d题</string>
+    <string name="question_champion_name_from_icon">下图中英雄的名字是？</string>
+    <string name="load_data_failed">加载数据失败</string>
+    <string name="pass">通过</string>
+    <string name="failed">失败</string>
+    <string name="score_title">考试成绩</string>
+    <string name="time_title">考试用时</string>
+    <string name="welcome">Hi，%s！</string>
+    <string name="reading">在读</string>
+    <string name="graduate">毕业</string>
+    <string name="complete">完成</string>
+    <string name="abort_title">考试中断</string>
+    <string name="abort_text">确保有3分钟不受打扰的时间来完成考试。</string>
+    <string name="ok">确定</string>
+
+    <string-array name="levels">
+        <item>小学生</item>
+        <item>初中生</item>
+        <item>高中生</item>
+        <item>本科生</item>
+        <item>硕士生</item>
+        <item>博士生</item>
+        <item>大师</item>
+    </string-array>
+    <string-array name="stages">
+        <item>小学|了解英雄、物品和召唤师技能</item>
+        <item>初中|了解天赋、符文</item>
+        <item>高中|熟悉英雄技能、基本出装</item>
+        <item>本科|暂未开放</item>
+        <item>硕士|暂未开放</item>
+        <item>博士|暂未开放</item>
+    </string-array>
+    <string-array name="sub_stages">
+        <item>0|一年级|看图识英雄</item>
+        <item>0|二年级|看图识物品</item>
+        <item>0|三年级|看图识召唤师技能</item>
+        <item>0|四年级|英雄类型</item>
+        <item>0|五年级|物品属性</item>
+        <item>0|六年级|英雄技能</item>
+    </string-array>
+
+</resources>
