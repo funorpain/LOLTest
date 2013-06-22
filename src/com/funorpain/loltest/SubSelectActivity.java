@@ -23,6 +23,8 @@ public class SubSelectActivity extends ListActivity {
 	private int mSubLevel;
 	private int mScore_0_0;
 	private int mTime_0_0;
+	private int mScore_0_1;
+	private int mTime_0_1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class SubSelectActivity extends ListActivity {
 		mSubLevel = settings.getInt("sublevel", 0);
 		mScore_0_0 = settings.getInt("score.0.0", 0);
 		mTime_0_0 = settings.getInt("time.0.0", Config.DEFAULT_TIME);
+		mScore_0_1 = settings.getInt("score.0.1", 0);
+		mTime_0_1 = settings.getInt("time.0.1", Config.DEFAULT_TIME);
 		mAdapter = new ListAdapter(this, R.layout.select_list_item, list);
 		setListAdapter(mAdapter);
 	}
@@ -59,6 +63,8 @@ public class SubSelectActivity extends ListActivity {
 		mSubLevel = settings.getInt("sublevel", 0);
 		mScore_0_0 = settings.getInt("score.0.0", 0);
 		mTime_0_0 = settings.getInt("time.0.0", Config.DEFAULT_TIME);
+		mScore_0_1 = settings.getInt("score.0.1", 0);
+		mTime_0_1 = settings.getInt("time.0.1", Config.DEFAULT_TIME);
 		mAdapter.notifyDataSetChanged();
 	}
 
@@ -69,6 +75,9 @@ public class SubSelectActivity extends ListActivity {
 		}
 		if (mStage == 0 && position == 0) {
 			Intent intent = new Intent(this, TestActivity.class);
+			startActivity(intent);
+		} else if (mStage == 0 && position == 1) {
+			Intent intent = new Intent(this, TestItemsActivity.class);
 			startActivity(intent);
 		}
 	}
@@ -115,6 +124,10 @@ public class SubSelectActivity extends ListActivity {
 						state.setText(mScore_0_0 < 100 ? String
 								.valueOf(mScore_0_0) : StringUtils
 								.formatTime(mTime_0_0));
+					} else if (mLevel == 0 && position == 1) {
+						state.setText(mScore_0_1 < 100 ? String
+								.valueOf(mScore_0_1) : StringUtils
+								.formatTime(mTime_0_1));
 					}
 				}
 			} else {
