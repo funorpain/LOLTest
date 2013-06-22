@@ -7,9 +7,10 @@ Installation
 ============
 
 If you are building from the first time out of the source repository, you will need to download
-champion data from http://lol.qq.com/101/hero.shtml. From the top directory, do:
+champion data from http://lol.qq.com/101/hero.shtml and item data from
+http://lol.duowan.com/s/items.html. From the top directory, do:
 
     cd scripts
     ./crawl.sh
 
-Once the champion data are downloaded, LOLTest can be compiled using ADT.
+Once the data are downloaded, LOLTest can be compiled using ADT.
