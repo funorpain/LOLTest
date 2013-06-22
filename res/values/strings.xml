@@ -10,6 +10,7 @@
     <string name="question">第%d题</string>
     <string name="question_champion_name_from_icon">下图中英雄的名字是？</string>
     <string name="question_item_name_from_icon">下图中物品的名称是？</string>
+    <string name="question_spell_name_from_icon">下图中召唤师技能的名称是？</string>
     <string name="load_data_failed">加载数据失败</string>
     <string name="pass">通过</string>
     <string name="failed">失败</string>

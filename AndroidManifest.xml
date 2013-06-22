@@ -40,6 +40,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".TestSpellsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".StageEndActivity"
             android:screenOrientation="portrait" >
         </activity>

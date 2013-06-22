@@ -4,6 +4,7 @@
 
 import json
 import os
+import re
 import shutil
 import urllib2
 
@@ -60,9 +61,42 @@ def crawl_items():
             dbFile.write(str.format('{0} {1} {2} {3} {4}\n', *item))
 
 
+def crawl_spells():
+    url = 'http://lol.duowan.com/s/js/spells.js'
+    spellicon = 'http://lol.duowan.com/s/images/'
+    shutil.rmtree('../assets/spells', True)
+    os.makedirs('../assets/spells/icons')
+    data = urllib2.urlopen(url).read()
+    data = re.search(r'var spells=(\[.*?\]);', data, re.M | re.S).group(1)
+    data = data.replace('spellicon+"', '"')
+    data = re.sub(r'([{,])([a-z]+):', '\\1"\\2":', data)
+    data = json.loads(data)
+    items = []
+    for item in data:
+        name = item['name'].encode('utf8')
+        icon = item['icon'].encode('utf8')
+        m = re.match(r'^tf_(\d+)\.jpg$', icon)
+        if not m:
+            raise Exception('unexpected icon value: ' + icon)
+        id = int(m.group(1))
+        level = item['level'].encode('utf8')
+        description = item['description'].encode('utf8')
+        print "%d\t%s\t%s\t%s" % (id, name, level, description)
+        items.append((id, name, level, description))
+        iconData = urllib2.urlopen(spellicon + icon).read()
+        with open('../assets/spells/icons/' + str(id) + '.jpg',
+                  'w') as iconFile:
+            iconFile.write(iconData)
+    items.sort()
+    with open('../assets/spells/spells.txt', 'w') as dbFile:
+        for item in items:
+            dbFile.write(str.format('{0}\t{1}\t{2}\t{3}\n', *item))
+
+
 def main():
     crawl_champions()
     crawl_items()
+    crawl_spells()
 
 
 if __name__ == '__main__':
