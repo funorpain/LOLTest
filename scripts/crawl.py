@@ -18,18 +18,19 @@ def main():
     items = []
     for id in data:
         key = data[id]['general']['key']
+        title = data[id]['general']['title'].encode('utf8')
         name = data[id]['general']['name'].encode('utf8')
         icon = data[id]['general']['icon']
         tags = ','.join(data[id]['general']['tags']).replace(' ', '')
-        print key, name, tags
-        items.append((key, name, tags))
+        print key, name, title, tags
+        items.append((key, name, title, tags))
         iconData = urllib2.urlopen('http://lol.qq.com/web201007' + icon).read()
         with open('../assets/champion/icons/' + key + '.jpg', 'w') as iconFile:
             iconFile.write(iconData)
     items.sort()
     with open('../assets/champion/champion.txt', 'w') as dbFile:
         for item in items:
-            dbFile.write(str.format('{0} {1} {2}\n', *item))
+            dbFile.write(str.format('{0} {1} {2} {3}\n', *item))
 
 
 if __name__ == '__main__':

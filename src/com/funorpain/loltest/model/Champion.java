@@ -5,6 +5,7 @@ import java.util.Set;
 public class Champion {
 	private String key;
 	private String name;
+	private String title;
 	private Set<String> tags;
 
 	public String getKey() {
@@ -21,6 +22,14 @@ public class Champion {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Set<String> getTags() {

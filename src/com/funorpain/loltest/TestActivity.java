@@ -115,7 +115,8 @@ public class TestActivity extends Activity {
 			mAnswer2.setEnabled(false);
 			mAnswer3.setEnabled(false);
 			mAnswer4.setEnabled(false);
-			String right = mChampions.get(mAnswered).getName();
+			String right = mChampions.get(mAnswered).getName() + " "
+					+ mChampions.get(mAnswered).getTitle();
 			RadioButton button = (RadioButton) v;
 			ViewGroup vg = (ViewGroup) v.getParent();
 			ImageView result = (ImageView) vg.findViewWithTag("result");
@@ -269,7 +270,7 @@ public class TestActivity extends Activity {
 		String[] lines = data.split("\n");
 		for (String line : lines) {
 			String[] parts = line.split(" ");
-			String[] tags = parts[2].split(",");
+			String[] tags = parts[3].split(",");
 			Set<String> tagSet = new HashSet<String>();
 			for (String tag : tags) {
 				tagSet.add(tag);
@@ -277,6 +278,7 @@ public class TestActivity extends Activity {
 			Champion item = new Champion();
 			item.setKey(parts[0]);
 			item.setName(parts[1]);
+			item.setTitle(parts[2]);
 			item.setTags(tagSet);
 			result.add(item);
 		}
@@ -299,13 +301,17 @@ public class TestActivity extends Activity {
 		list.addAll(set);
 		Collections.shuffle(list);
 
-		mAnswer1.setText(mChampions.get(list.get(0)).getName());
+		mAnswer1.setText(mChampions.get(list.get(0)).getName() + " "
+				+ mChampions.get(list.get(0)).getTitle());
 		mAnswer1.setChecked(false);
-		mAnswer2.setText(mChampions.get(list.get(1)).getName());
+		mAnswer2.setText(mChampions.get(list.get(1)).getName() + " "
+				+ mChampions.get(list.get(1)).getTitle());
 		mAnswer2.setChecked(false);
-		mAnswer3.setText(mChampions.get(list.get(2)).getName());
+		mAnswer3.setText(mChampions.get(list.get(2)).getName() + " "
+				+ mChampions.get(list.get(2)).getTitle());
 		mAnswer3.setChecked(false);
-		mAnswer4.setText(mChampions.get(list.get(3)).getName());
+		mAnswer4.setText(mChampions.get(list.get(3)).getName() + " "
+				+ mChampions.get(list.get(3)).getTitle());
 		mAnswer4.setChecked(false);
 		return true;
 	}
