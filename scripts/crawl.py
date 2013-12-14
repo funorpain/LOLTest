@@ -2,6 +2,9 @@
 # -*- coding: utf8 -*-
 
 
+from bs4 import BeautifulSoup
+import StringIO
+import gzip
 import json
 import os
 import re
@@ -9,23 +12,36 @@ import shutil
 import urllib2
 
 
+def download(url):
+    response = urllib2.urlopen(url)
+    if response.info().get('Content-Encoding') == 'gzip':
+        buf = StringIO.StringIO(response.read())
+        f = gzip.GzipFile(fileobj=buf)
+        data = f.read()
+    else:
+        data = response.read()
+    return data
+
+
 def crawl_champions():
     shutil.rmtree('../assets/champion', True)
     os.makedirs('../assets/champion/icons')
-    data = urllib2.urlopen('http://lol.qq.com/app/js/heros.js').read()
-    data = data.decode('gbk').encode('utf8')
-    data = data[data.find('{'):data.rfind('}') + 1]
-    data = json.loads(data)
+    data = download('http://lol.duowan.com/hero/')
+    soup = BeautifulSoup(data)
     items = []
-    for id in data:
-        key = data[id]['general']['key']
-        title = data[id]['general']['title'].encode('utf8')
-        name = data[id]['general']['name'].encode('utf8')
-        icon = data[id]['general']['icon']
-        tags = ','.join(data[id]['general']['tags']).replace(' ', '')
+    for li in soup.select('#champion_list li'):
+        key = li.select('a')[0]['href'].strip().split('/')[-2].encode('utf8')
+        title = li.select('h3')[0].text.strip().encode('utf8')
+        name = li.select('h2')[0].text.strip().encode('utf8')
+        icon = li.select('img')[0]['src'].encode('utf8')
+        tags = ''
+        for tag in li['class']:
+            if tag not in ['', 'boy_tag', 'girl_tag']:
+                tags += ',' + tag[:-4]
+        tags = tags[1:].encode('utf8')
         print key, name, title, tags
         items.append((key, name, title, tags))
-        iconData = urllib2.urlopen('http://lol.qq.com/web201007' + icon).read()
+        iconData = download(icon)
         with open('../assets/champion/icons/' + key + '.jpg', 'w') as iconFile:
             iconFile.write(iconData)
     items.sort()
@@ -39,7 +55,7 @@ def crawl_items():
     imgUrl = 'http://img.lolbox.duowan.com/zb/%d_64x64.png'
     shutil.rmtree('../assets/items', True)
     os.makedirs('../assets/items/icons')
-    data = urllib2.urlopen(url).read()
+    data = download(url)
     data = data[data.find('{'):data.rfind('}') + 1]
     data = json.loads(data)
     items = []
@@ -51,7 +67,7 @@ def crawl_items():
         icon = data[id]['icon']
         print id, name, price, filter, attr
         items.append((id, name, price, filter, attr))
-        iconData = urllib2.urlopen(imgUrl % (icon)).read()
+        iconData = download(imgUrl % (icon))
         with open('../assets/items/icons/' + str(id) + '.png',
                   'w') as iconFile:
             iconFile.write(iconData)
@@ -66,7 +82,7 @@ def crawl_spells():
     spellicon = 'http://lol.duowan.com/s/images/'
     shutil.rmtree('../assets/spells', True)
     os.makedirs('../assets/spells/icons')
-    data = urllib2.urlopen(url).read()
+    data = download(url)
     data = re.search(r'var spells=(\[.*?\]);', data, re.M | re.S).group(1)
     data = data.replace('spellicon+"', '"')
     data = re.sub(r'([{,])([a-z]+):', '\\1"\\2":', data)
@@ -83,7 +99,7 @@ def crawl_spells():
         description = item['description'].encode('utf8')
         print "%d\t%s\t%s\t%s" % (id, name, level, description)
         items.append((id, name, level, description))
-        iconData = urllib2.urlopen(spellicon + icon).read()
+        iconData = download(spellicon + icon)
         with open('../assets/spells/icons/' + str(id) + '.jpg',
                   'w') as iconFile:
             iconFile.write(iconData)

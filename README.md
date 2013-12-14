@@ -7,7 +7,7 @@ Installation
 ============
 
 If you are building from the first time out of the source repository, you will need to download
-game data from http://lol.qq.com/101/ and http://lol.duowan.com/. From the top directory, do:
+game data from http://lol.duowan.com/. From the top directory, do:
 
     cd scripts
     ./crawl.sh
